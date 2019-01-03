@@ -21,7 +21,6 @@ public class CardWheel : MonoBehaviour {
 
 	public GameObject cardPrefab; // The card prefab
 
-	public GameObject colorPicker;
 
 	private bool waitingForColor = false;
 	private bool waitingForDraw = false;
@@ -32,18 +31,14 @@ public class CardWheel : MonoBehaviour {
 	private List<GameObject> addedCards; // All cards from the player object as gameObjects in wheel
 
 
-
-	// UI
-	public GameObject drawButton, colorHint;
-
-	// Use this for initialization
-	void Start () {
-		addedCards = new List<GameObject> ();
+    // Use this for initialization 
+    // Called when the scene is loaded
+	void Awake () {
+        addedCards = new List<GameObject> ();
 		cardDepth = 0.005f;
 		originalWheelPosition = gameObject.transform.position;
 
 		RotateWheel ();
-
 	}
 	
 	// Update is called once per frame
@@ -181,18 +176,19 @@ public class CardWheel : MonoBehaviour {
 		return new Vector3 (x, y, z);
 	}
 
-	/// <summary>
-	/// Highlights the card on the specified index.
-	/// </summary>
-	/// <param name="_cardIndex">Card index to highlight.</param>
-	public void HighlightCard(int _cardIndex) {
-		Vector2 newCardPos = GetHighlightedCardPosition(CARD_ANGLE_INCREMENT*_cardIndex); // Calculate new position for card
-		Vector3 newCardPos3 = new Vector3(newCardPos.x, newCardPos.y, addedCards[_cardIndex].transform.position.z); // Convert to Vector3
+    /// <summary>
+    /// Highlights the card on the specified index.
+    /// </summary>
+    /// <param name="_cardIndex">Card index to highlight.</param>
+    public void HighlightCard(int _cardIndex)
+    {
+        Vector2 newCardPos = GetHighlightedCardPosition(CARD_ANGLE_INCREMENT * _cardIndex); // Calculate new position for card
+        Vector3 newCardPos3 = new Vector3(newCardPos.x, newCardPos.y, addedCards[_cardIndex].transform.position.z); // Convert to Vector3
 
-		gameObject.transform.rotation = Quaternion.Euler (0, 0, 0); // Reset rotation to make positioning easier
-		addedCards [_cardIndex].transform.position = newCardPos3; // Set new position of card
-		gameObject.transform.rotation = Quaternion.Euler (0, 0, currentRotationAngle); // Set rotation to original value
-	}
+        gameObject.transform.rotation = Quaternion.Euler(0, 0, 0); // Reset rotation to make positioning easier
+        addedCards[_cardIndex].transform.position = newCardPos3; // Set new position of card
+        gameObject.transform.rotation = Quaternion.Euler(0, 0, currentRotationAngle); // Set rotation to original value
+    }
 		
 	/// <summary>
 	/// Calculates the x,y position for the highlighted state for a given angle.
